@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Tests</title>
+
+    <script>
+    </script>
+    <style>
+        input[type=range][orient=vertical]
+        {
+            writing-mode: bt-lr; /* IE */
+            -webkit-appearance: slider-vertical; /* WebKit */
+            width: 8px;
+            height: 175px;
+            padding: 0 5px;
+        }
+    </style>
+</head>
+<body>
+<input type="text" list="selection" min="0" max="100" name="range" orient="vertical" />
+<datalist id="selection">
+    <option value="10" label="low">
+    <option value="20">
+    <option value="80" label="high">
+</datalist>
+</body>
+</html>
