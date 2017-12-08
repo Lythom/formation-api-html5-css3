@@ -38,6 +38,10 @@
 			.reveal pre {
 				width: 100%;
 			}
+
+			small, .small {
+				font-size: 28px !important;
+			}
 		</style>
 	</head>
 	<body>
@@ -49,20 +53,27 @@
 
 		<script src="lib/js/head.min.js"></script>
 		<script src="js/reveal.js"></script>
+		<script src="plugin/markdown/marked.js"></script>
+		<script src="plugin/markdown/markdown.js"></script>
 
-		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
-			Reveal.initialize({
-			  	history: true,
-				dependencies: [
-					{ src: 'plugin/markdown/marked.js' },
-					{ src: 'plugin/markdown/markdown.js' },
-					{ src: 'plugin/notes/notes.js', async: true },
-					{ src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
-			});
-		</script>
+        <script>
+          // More info about config & dependencies:
+          // - https://github.com/hakimel/reveal.js#configuration
+          // - https://github.com/hakimel/reveal.js#dependencies
+
+          Reveal.initialize({
+            history      : true,
+            dependencies : [
+              { src : 'plugin/notes/notes.js', async : true },
+              { src : 'plugin/highlight/highlight.js', async : true, callback : function() { hljs.initHighlightingOnLoad(); } }
+            ],
+            markdown     : {
+              sanitize    : false,
+              smartypants : false,
+            }
+          });
+
+
+        </script>
 	</body>
 </html>
