@@ -26,7 +26,7 @@ Freelance - JavaScript developer and architect
 
 Note:
 * Beaucoup de choses
-* Objectif: bien tout comprendre mais pas forcément mémoriser. Ce support permettra de retrouver les infos.s
+* Objectif: bien tout comprendre mais pas forcément mémoriser. Ce support permettra de retrouver les infos.
 ---
 
 ## LE WEB VERSION HTML&nbsp;5
