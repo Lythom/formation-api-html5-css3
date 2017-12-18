@@ -1198,8 +1198,7 @@ ___
 <button class="alwaysSpinButton">Click me !</button>
 
 ```html
-<button class="spinButton">Click me !</button>
-<button class="spinButton easeout">Click me !</button>
+<button class="alwaysSpinButton">Click me !</button>
 ```
 
 Note: 
