@@ -36,7 +36,7 @@ ___
 ### Définition et limites de HTML&nbsp;5
 
 * Successeur de HTML&nbsp;4
-* Ensemble de fonctionnalité
+* Spécification d'un ensemble de fonctionnalité et de comportements attendus
 * Chaque fonctionnalité => support navigateur différent
 * Concerne surtout l'API JavaScript
 * Concerne aussi l'accessibilité et l'interactivité
@@ -231,9 +231,9 @@ https://caniuse.com/#search=placeholder (97.7%)
 ```
 <input type="text" list="valuelist" name="val" placeholder="Saisir une valeur" />
 <datalist id="valuelist">
-    <option value="20" label="low">
-    <option value="50">
-    <option value="80" label="high">
+    <option value="abc" label="low">
+    <option value="bcd">
+    <option value="cde" label="high">
 </datalist>
 ___
 
@@ -433,7 +433,7 @@ ___
 ### Canvas 
 
 ```html
-<canvas id='canvas' width='480' height='320'> Canvas not supported</canvas>
+<canvas id='canvas1' width='480' height='320'> Canvas not supported</canvas>
 ```
 ```js
 const c = document.getElementById('canvas1');
@@ -443,7 +443,7 @@ ctx.fillStyle = 'lightgrey'; ctx.fillRect(0, 0, 480, 320);
 // axis
 ctx.beginPath();ctx.strokeStyle='red';
 ctx.moveTo(0,y);ctx.lineTo(480,y);ctx.stroke();
-ctx.moveTo(x,0);ctx.lineTo(x,320);ctx.strokeStyle='red';ctx.stroke();
+ctx.moveTo(x,0);ctx.lineTo(x,320);ctx.stroke();
 // draw function
 ctx.beginPath();ctx.moveTo(x,y + Math.sin(0) * 100);
 setInterval(function() {
@@ -465,7 +465,7 @@ ctx.fillStyle = 'lightgrey'; ctx.fillRect(0, 0, 480, 320);
 // axis
 ctx.beginPath();ctx.strokeStyle='red';
 ctx.moveTo(0,y);ctx.lineTo(480,y);ctx.stroke();
-ctx.moveTo(x,0);ctx.lineTo(x,320);ctx.strokeStyle='red';ctx.stroke();
+ctx.moveTo(x,0);ctx.lineTo(x,320);ctx.stroke();
 // draw function
 ctx.beginPath();ctx.moveTo(x,y + Math.sin(0) * 100);
 setInterval(function() {
@@ -573,10 +573,10 @@ function attributeSetFloats(gl, prog, attr_name, rsize, arr) {
 
 function init() {
 	try {
-	const c = document.getElementById('canvas2');
-    const gl = c.getContext('webgl');
-    
-    var prog = shaderProgram(gl,
+        const c = document.getElementById('canvas2');
+        const gl = c.getContext('webgl');
+        
+        var prog = shaderProgram(gl,
             'attribute vec3 pos;'+
             'void main() {'+
             '	gl_Position = vec4(pos, 2.0);'+
@@ -595,9 +595,9 @@ function init() {
         ]);
         
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-	} catch (e) {
-		alert('Error: '+e);
-	}
+    } catch (e) {
+        alert('Error: '+e);
+    }
 }
 setTimeout(init, 100);
 
@@ -632,6 +632,7 @@ compatible avec l'objet JavaScript
 
 Autres formats similaires : xml, yaml, formats binaires
 </div>
+
 ```json
 { 
   "menu": "Fichier", 
@@ -847,23 +848,70 @@ if ("geolocation" in navigator) {
 }
 ```
 
-
-
 ___
 
 ### Orientation 
+
+
+https://caniuse.com/#search=Orientation (91.8%)
+
+Connaitre l'orientation du téléphone
+
+<div>
+    <div class="small" style="display: inline-block;">
+        <pre>
+        window.addEventListener('deviceorientation', handleOrientation);
+        function handleOrientation(event) {
+          // true pour un référentiel terrestre
+          // false pour un référentiel arbitraire
+          const absolute = event.absolute;
+          // inclinaison autour de l"axe Z
+          const alpha    = event.alpha;
+          // inclinaison autour de l"axe X
+          const beta     = event.beta;
+          // inclinaison autour de l"axe Y
+          const gamma    = event.gamma;
+        }
+        </pre>
+    </div>
+    <div class="small" style="display: inline-block;width: 29%;vertical-align: top;">
+        <img src="https://developer.mozilla.org/@api/deki/files/5694/=axes.png"/>
+    </div>
+    <div class="small">Source: https://developer.mozilla.org/en-US/docs/Web/Guide/Events/Orientation_and_motion_data_explained</div>
+</div>
 
 ___
 
 ### Batterie 
 
+https://caniuse.com/#search=battery (69.15%)<!-- .element: class="small" -->
+
+Connaitre l'état de charge du périphérique. Support en baisse pour confidentialité. <!-- .element: class="small" -->
+
+```js
+const battery = navigator.battery || navigator.mozBattery || navigator.webkitBattery;
+
+function updateBatteryStatus() {
+  console.log("Batterie chargée à : " + battery.level * 100 + " %");
+  if (battery.charging) { console.log("Chargement de la batterie"); }
+}
+battery.addEventListener("chargingchange", updateBatteryStatus);
+battery.addEventListener("levelchange", updateBatteryStatus);
+updateBatteryStatus();
+```
+<div class="small">Source: https://developer.mozilla.org/fr/docs/Web/API/Battery_status_API</div>
 ___
 
 ### Caméra et micro 
 
-___
+https://caniuse.com/#search=getUserMedia (84.56%)
 
-### WebRTC
+Obtenir un flux de données du micro ou de la webcam.
+
+Nombreux changement d'API, utilisation d'un Shim ou d'un polyfill recommandé. <!-- .element: class="small" -->
+```html
+🔎 Shim getUserMedia
+```
 
 ---
 
@@ -871,23 +919,291 @@ ___
 
 ___
 
-### Fonts Sélecteurs CSS3 
+### Fonts 
+Problématique très complèxe <!-- .element: class="small" -->
+
+#### Sans webfont
+
+* Dépendant du système => http://fontfamily.io/
+* Utiliser une font stack
+```html
+🔎 css font stack
+```
+* Peu de choix, pas de fantaisie
+___
+
+### Fonts 
+Problématique très complèxe <!-- .element: class="small" -->
+
+#### avec webfont
+
+* Problèmatique de performance
+  * FOUT (Flash Of Unstyled Text)<!-- .element: class="small" -->
+  * FOIT (Flash Of Invisible Text)<!-- .element: class="small" -->
+  * FOFT (Flash Of Faux Text)<!-- .element: class="small" -->
+  * https://www.zachleat.com/web/comprehensive-webfonts<!-- .element: class="smaller" -->
+  * https://www.zachleat.com/web/recipes/<!-- .element: class="smaller" -->
+* Problèmatiques de fidélité du rendu
+  * https://blog.clever-age.com/fr/2012/08/29/optimiser-le-rendu-de-font-face/ <!-- .element: class="smaller" -->
+
+Note:
+Si possible confier le sujet à un web developer expérimenté. Sinon suivre une méthode éprouvée.
+___
+
+### Fonts
+
+Approche naïve
+
+```css
+@font-face {
+    font-family: 'League Gothic';
+    src: url('league-gothic.eot');
+    src: url('league-gothic.eot?#iefix') format('embedded-opentype'),
+         url('league-gothic.woff') format('woff'),
+         url('league-gothic.ttf') format('truetype');
+}
+```
+<span style="font-family: 'League Gothic'">Je suis en League Gothic !</span>
+```htlm
+<span style="font-family: 'League Gothic'">Je suis en League Gothic !</span>
+```
+___
+
+### Sélecteurs CSS&nbsp;3 
+
+https://caniuse.com/#search=CSS3%20selectors (98.16%)
+
+sélecteurs CSS utilisés également dans les biblitohèque de requêtage du DOM
+
+```html
+🔎 css selecteur <motif>
+```
+
+https://developer.mozilla.org/fr/docs/Web/CSS/S%C3%A9lecteurs_CSS<!-- .element: class="small" -->
+
+___
+
+### Sélecteurs CSS&nbsp;3
+
+<div class="small">
+<ul style="float:left; width: 45%;">
+<li>[foo^="bar"] (attribute start with)</li>
+<li>[foo$="bar"] (attribute end with)</li>
+<li>[foo*="bar"] (attribute contains)</li>
+<li>:root (racine du document)</li>
+<li>:nth-child()</li>
+<li>:nth-last-child()</li>
+<li><type>:nth-of-type()</li>
+<li><type>:nth-last-of-type()</li>
+<li>:last-child</li>
+<li>:first-of-type</li>
+<li>:last-of-type</li>
+</ul>
+<ul style="float:left; width: 45%;">
+<li>:only-child</li>
+<li>:only-of-type</li>
+<li>:empty</li>
+<li>:target</li>
+<li>:enabled</li>
+<li>:disabled</li>
+<li>:checked</li>
+<li>:not()</li>
+<li>~</li>
+</ul>
+</div>
+
+___
+
+### Sélecteurs CSS&nbsp;3
+
+<div class="small">
+* Préférez les sélecteurs de class (`.nomDeClasse`)
+* Évitez les sélecteurs d'identifiant (`#toujoursUniqueSaufParfois`)
+* Évitez les sélecteurs de type (`span, div, a, button`)
+* Évitez les sélecteurs universels ou d'attributs seuls
+  * OUI (dans un context fermé)
+    * `.monElement > *`, `input.avecStyleSpecial[type=range]`
+  * NON (dans un context trop large)
+    * `div > *`, `[type=range]`
+</div>
+Note:
+Sélecteurs de styles à utiliser pour les styles globaux uniquement (reset, choix de design à grande échelle)
+
+
 
 ___
 
 ### Bordures 
 
+```css
+ .shadowBox {
+       width: 200px;
+       color: #444444;
+       background-color: #ddd; /* Fallback for older browsers */
+       background-image: linear-gradient(#E5E5E5, #CFCFCF);
+       box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7) /* inset */; 
+       margin: 2rem;
+       padding: 1rem;
+    }
+```
+<style>
+    .shadowBox {
+       display: inline-block;
+       width: 200px;
+       color: #444444;
+       background-color: #ddd;
+       background-image: linear-gradient(#E5E5E5, #CFCFCF);
+       box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+       margin: 2rem !important;
+       padding: 1rem !important;
+    }
+    .shadowBox2 {
+       display: inline-block;
+       width: 200px;
+       color: #444444;
+       background-color: #ddd;
+       background-image: linear-gradient(#E5E5E5, #CFCFCF);
+       box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7) inset; 
+       margin: 2rem !important;
+       padding: 1rem !important;
+    }
+</style>
+<div>
+    <div class="shadowBox">Boite avec ombrage</div>
+    <div class="shadowBox2">Boite avec ombrage 2</div>
+</div>
+
 ___
 
-### Couleurs et opadte 
+### Couleurs et opacité 
+
+espace de couleur sRGB sur le web (sRGB color space)
+
+```css
+.shadowBoxLeft {
+    background-color: rgba(255, 0, 0, 0.5);
+}
+.shadowBoxRight {
+    background-image: linear-gradient(#0000FF, rgba(0, 0, 255, 0));
+    /* #0000FFFF = rgba(0, 0, 255, 1) 
+                 = rgb(0, 0, 255) 
+                 = hsla(240, 100%, 50%, 1) 
+                 = hsl(240, 100%, 50%) */
+}
+```
+    
+<style>
+    .shadowBox3 {
+       display: inline-block;
+       width: 200px;
+       color: #444444;
+       background-color: rgba(255, 0, 0, 0.5);
+       box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7);
+       margin: 2rem !important;
+       padding: 1rem !important;
+    }
+    .shadowBox4 {
+       display: inline-block;
+       width: 200px;
+       color: #444444;
+       background-color: rgba(0, 0, 255, 0.3);
+       background-image: linear-gradient(rgba(0, 0, 255, 1), rgba(0, 0, 255, 0));
+       box-shadow: -1px 2px 5px 1px rgba(0, 0, 0, 0.7) inset; 
+       margin-left: -5rem !important;
+       padding: 1rem !important;
+    }
+</style>
+<div>
+    <div class="shadowBox3">Boite avec ombrage</div>
+    <div class="shadowBox4">Boite avec ombrage 2</div>
+</div>
 
 ___
 
 ### Transitions et transformations 
 
+```css
+.spinButton {
+    transition: transform 0.5s ease-in;
+}
+.spinButton:active {
+    transform: rotate(270deg);
+}
+.spinButton.easeout {
+    transition: transform 0.5s ease-out;
+}
+```
+
+<style>
+.spinButton {
+    transition: transform 0.5s ease-in;
+    height: 96px;
+    width: 96px;
+}
+.spinButton:active {
+    transform: rotate(270deg);
+}
+.spinButton.easeout {
+    transition: transform 0.5s ease-out;
+}
+</style>
+
+<button class="spinButton">Click me ! Ease-in</button>
+<button class="spinButton easeout">Click me ! Ease-out</button>
+
+```html
+<button class="spinButton">Click me ! Ease-in</button>
+<button class="spinButton easeout">Click me ! Ease-out</button>
+```
+
+Note: 
+mots clés: css transition et css transform;
+performance de `transform` (`scale, opacitity, rotate`) meilleures que de modifier width et height en JavaScript.
 ___
 
 ### Animations 
+
+```css
+@keyframes alwaysSpinButtonAnimation {
+    from {transform: rotate(0deg);}
+    50% {transform: rotate(90deg);}
+    to {transform: rotate(360deg);}
+}
+
+.alwaysSpinButton {
+    animation-name: alwaysSpinButtonAnimation;
+    animation-duration: 1s;
+    animation-iteration-count: 10;
+    animation-timing-function: linear;
+}
+```
+
+<style>
+@keyframes alwaysSpinButtonAnimation {
+    from {transform: rotate(0deg);}
+    50% {transform: rotate(90deg);}
+    to {transform: rotate(360deg);}
+}
+
+.alwaysSpinButton {
+    height: 96px;
+    width: 96px;
+    animation-name: alwaysSpinButtonAnimation;
+    animation-duration: 1s;
+    animation-iteration-count: 10;
+    animation-timing-function: linear;
+}
+</style>
+
+<button class="alwaysSpinButton">Click me !</button>
+
+```html
+<button class="spinButton">Click me !</button>
+<button class="spinButton easeout">Click me !</button>
+```
+
+Note: 
+mots clés: css animation keyframes;
 
 ---
 
@@ -895,16 +1211,34 @@ ___
 
 ___
 
-### Vision OneWeb 
+### Responsive Web Design (RWD)
 
-___
+Contenu qui s'adapte à l'espace d'affichage disponible
 
-### Responsive Web Design 
+* Grille fluide (float, display: inline-block, flexbox, CSS grid)
+* Media queries (`@media screen and (min-width: 1024px) {`)
+    * Avec breakpoints
+    * Sur mesure
+* Element queries (nécessite JavaScript)
+* images et video adaptives
+* SVG et vectoriel
+
+<!-- .element: class="small" -->
+
+https://developer.mozilla.org/fr/Apps/app_layout/responsive_design_building_blocks
 
 ___
 
 ### Progressive Enhancement 
 
-___
+* Utiliser les fonctionnalités les répandues en premier
+* Utiliser modernizr pour ajouter des fonctionnalités si possible
+* Avoir un fallback CSS pour les propriétés mal supportées
 
-### Media Query
+---
+
+Retrouver les slides sur https://github.com/Lythom/formation-api-html5-css3
+
+<div class="smaller">
+    <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a><br /><span xmlns:dct="http://purl.org/dc/terms/" property="dct:title">Formation aux API HTML5 et CSS3</span> de <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/Lythom/formation-api-html5-css3/" property="cc:attributionName" rel="cc:attributionURL">Samuel Bouchet</a> est mis à disposition selon les termes de la <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International</a>.
+</div>
