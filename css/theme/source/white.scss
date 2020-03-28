@@ -48,3 +48,50 @@ section.has-dark-background {
 // Theme template ------------------------------
 @import "../template/theme";
 // ---------------------------------------------
+
+.reveal {
+	section > section.past:first-child:not(.hideIfNotFirst) {
+		display: block !important;
+		opacity: 1 !important;
+		transform: translate(0, 0) !important;
+		top: 0px !important;
+		transition: transform 200ms ease, top 200ms ease !important;
+	}
+	section img {
+		border: none;
+		outline: 4px solid black;
+	}
+	pre code {
+		max-height: 460px;
+	}
+	pre {
+		width: 100%;
+	}
+
+	.inline {
+		display: inline !important;
+	}
+
+	small, .small {
+		font-size: 28px !important;
+	}
+	.smaller {
+		font-size: 22px !important;
+	}
+
+	.m0p0 {
+		margin: 0;
+		padding: 0;
+	}
+
+	.va-top {
+		vertical-align: top;
+	}
+	.va-middle {
+		vertical-align: middle;
+	}
+
+	.ta-left {
+		text-align: left;
+	}
+}
